@@ -59,7 +59,7 @@ public class TelaInicio extends JFrame {
 		lblNewLabel_1.setBounds(93, 49, 254, 56);
 		contentPane.add(lblNewLabel_1);
 		
-		JButton btnNewButton = new JButton("Cadastrar");
+		JButton btnNewButton = new JButton("Cadastrar-se");
 		btnNewButton.setForeground(new Color(0, 128, 128));
 		btnNewButton.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		btnNewButton.addActionListener(new ActionListener() {
