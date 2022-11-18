@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
+import javax.swing.JScrollPane;
 
 public class TelaInicio extends JFrame {
 
@@ -26,7 +28,7 @@ public class TelaInicio extends JFrame {
 				try {
 					TelaInicio frame = new TelaInicio();
 					frame.setVisible(true);
-				} catch (Exception e) {
+					frame.setLocationRelativeTo(null);				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
@@ -38,8 +40,10 @@ public class TelaInicio extends JFrame {
 	 */
 	public TelaInicio() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 482, 639);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(220, 20, 60));
+		contentPane.setForeground(new Color(220, 20, 60));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -47,26 +51,16 @@ public class TelaInicio extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("Bem Vindo(a) ao");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setForeground(new Color(0, 64, 128));
+		lblNewLabel.setForeground(new Color(255, 215, 0));
 		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		lblNewLabel.setBounds(153, 11, 136, 56);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("POKEDEX");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setForeground(new Color(0, 64, 128));
+		lblNewLabel_1.setForeground(new Color(255, 215, 0));
 		lblNewLabel_1.setFont(new Font("Wide Latin", Font.PLAIN, 25));
 		lblNewLabel_1.setBounds(93, 49, 254, 56);
 		contentPane.add(lblNewLabel_1);
-		
-		JButton btnNewButton = new JButton("Cadastrar-se");
-		btnNewButton.setForeground(new Color(0, 128, 128));
-		btnNewButton.setFont(new Font("Times New Roman", Font.PLAIN, 18));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton.setBounds(119, 124, 206, 68);
-		contentPane.add(btnNewButton);
 	}
 }

@@ -1,13 +1,14 @@
 package visao;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaPokemon extends JFrame {
 
@@ -15,21 +16,6 @@ public class TelaPokemon extends JFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaPokemon frame = new TelaPokemon();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -65,8 +51,21 @@ public class TelaPokemon extends JFrame {
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
 		
-		JButton btnNewButton = new JButton("Cadastrar");
-		btnNewButton.setBounds(157, 166, 89, 23);
-		contentPane.add(btnNewButton);
+		JButton btnCadPokemon = new JButton("Cadastrar");
+		btnCadPokemon.setBounds(157, 166, 89, 23);
+		contentPane.add(btnCadPokemon);
+		
+		JButton btnBack = new JButton("<");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaEscolherTipoCadastro telacadastro = new TelaEscolherTipoCadastro();
+				telacadastro.setLocationRelativeTo(null);
+				telacadastro.setVisible(true);
+				dispose();
+			}
+		});
+		btnBack.setForeground(new Color(0, 0, 205));
+		btnBack.setBounds(10, 18, 41, 23);
+		contentPane.add(btnBack);
 	}
 }
