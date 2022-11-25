@@ -62,5 +62,17 @@ public class TelaInicio extends JFrame {
 		lblNewLabel_1.setFont(new Font("Wide Latin", Font.PLAIN, 25));
 		lblNewLabel_1.setBounds(93, 49, 254, 56);
 		contentPane.add(lblNewLabel_1);
+		
+		JButton btnTelaEscolherCad = new JButton("New button");
+		btnTelaEscolherCad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaEscolherTipoCadastro tipoCadastro = new TelaEscolherTipoCadastro();
+				tipoCadastro.setVisible(true);
+				tipoCadastro.setLocationRelativeTo(null);
+				dispose();
+			}
+		});
+		btnTelaEscolherCad.setBounds(111, 268, 223, 128);
+		contentPane.add(btnTelaEscolherCad);
 	}
 }
