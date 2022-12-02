@@ -3,6 +3,7 @@ package visao;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -130,12 +131,20 @@ public class TelaPokemon extends JFrame {
 			public void actionPerformed(ActionEvent e) {		
 				Pokemon p = new Pokemon();
 				PokemonController controller = new PokemonController();
-				p.setNome(txtNamePokemon.getText().toString());
-				p.setPeso(Double.valueOf(txtPeso.getText()));
-				p.setAltura(Double.valueOf(txtAltura.getText()));
-				p.setTipo(comboBoxTipo.getSelectedItem().toString());
-				p.setRegiao(comboBoxRegiao.getSelectedItem().toString());
-				controller.addPokemon(p);
+				
+				if (txtNamePokemon.getText().isEmpty() || txtNamePokemon.getText() == null) {
+					JOptionPane.showMessageDialog(null, "Campo obrigatório: Nome");
+				} else {
+					p.setNome(txtNamePokemon.getText().toString());
+					p.setPeso(Double.valueOf(txtPeso.getText()));
+					p.setAltura(Double.valueOf(txtAltura.getText()));
+					p.setTipo(comboBoxTipo.getSelectedItem().toString());
+					p.setRegiao(comboBoxRegiao.getSelectedItem().toString());
+					controller.addPokemon(p);
+					
+					controller.imprimePokemon();
+				}
+				
 			}
 		});
 		btnCadPokemon.setBounds(297, 74, 89, 23);
