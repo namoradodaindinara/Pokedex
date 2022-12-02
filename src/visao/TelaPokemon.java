@@ -50,7 +50,7 @@ public class TelaPokemon extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Cadastre seu Pokemon");
-		lblNewLabel.setBounds(147, 11, 128, 37);
+		lblNewLabel.setBounds(147, 11, 140, 37);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Pokémon:");
@@ -162,7 +162,7 @@ public class TelaPokemon extends JFrame {
 				
 			}
 		});
-		btnCadPokemon.setBounds(297, 74, 89, 23);
+		btnCadPokemon.setBounds(297, 74, 100, 23);
 		contentPane.add(btnCadPokemon);
 		
 	}
