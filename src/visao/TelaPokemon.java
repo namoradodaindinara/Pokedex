@@ -130,19 +130,34 @@ public class TelaPokemon extends JFrame {
 		btnCadPokemon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {		
 				Pokemon p = new Pokemon();
-				PokemonController controller = new PokemonController();
+				PokemonController controller = PokemonController.getInstancia();
+				boolean inserir = controller.inserir(p);
 				
 				if (txtNamePokemon.getText().isEmpty() || txtNamePokemon.getText() == null) {
 					JOptionPane.showMessageDialog(null, "Campo obrigatório: Nome");
+				} else if (txtAltura.getText().isEmpty() || txtAltura.getText() == null) {
+					JOptionPane.showMessageDialog(null, "Campo obrigatório: Altura");
+				} else if (txtPeso.getText().isEmpty() || txtPeso.getText() == null) {
+					JOptionPane.showMessageDialog(null, "Campo obrigatório: Peso");
+				} else if (txtPeso.getText().isEmpty() || txtPeso.getText() == null) {
+					JOptionPane.showMessageDialog(null, "Campo obrigatório: Peso");
 				} else {
+					String lista = "";
+					
 					p.setNome(txtNamePokemon.getText().toString());
 					p.setPeso(Double.valueOf(txtPeso.getText()));
 					p.setAltura(Double.valueOf(txtAltura.getText()));
 					p.setTipo(comboBoxTipo.getSelectedItem().toString());
 					p.setRegiao(comboBoxRegiao.getSelectedItem().toString());
-					controller.addPokemon(p);
 					
-					controller.imprimePokemon();
+					
+					
+					for(int i = 0; i < controller.listaPokemon().size(); i++) {
+						lista = controller.listaPokemons().get(i).getNome();
+					}
+					
+					System.out.println(lista);
+					
 				}
 				
 			}
@@ -152,3 +167,6 @@ public class TelaPokemon extends JFrame {
 		
 	}
 }
+
+
+
