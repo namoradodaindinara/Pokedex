@@ -3,6 +3,7 @@ package visao;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -51,7 +52,17 @@ public class TelaTreinador extends JFrame {
 		textField_1.setColumns(10);
 
 		JButton btnCadTreinador = new JButton("Cadastrar");
-		btnCadTreinador.setBounds(163, 190, 89, 23);
+		btnCadTreinador.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if (textField.getText().isEmpty() || textField.getText() == null) {
+					JOptionPane.showMessageDialog(null, "Campo obrigatório: Nome");
+				} else if (textField_1.getText().isEmpty() || textField_1.getText() == null) {
+					JOptionPane.showMessageDialog(null, "Campo obrigatório: CPF");
+				}
+			}
+		});
+		btnCadTreinador.setBounds(163, 190, 103, 23);
 		contentPane.add(btnCadTreinador);
 
 		JButton btnBack = new JButton("<");
