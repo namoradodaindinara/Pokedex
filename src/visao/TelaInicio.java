@@ -28,7 +28,8 @@ public class TelaInicio extends JFrame {
 				try {
 					TelaInicio frame = new TelaInicio();
 					frame.setVisible(true);
-					frame.setLocationRelativeTo(null);				} catch (Exception e) {
+					frame.setLocationRelativeTo(null);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
@@ -48,14 +49,14 @@ public class TelaInicio extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("POKEDEX");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setForeground(new Color(255, 215, 0));
 		lblNewLabel_1.setFont(new Font("Segoe UI Black", Font.PLAIN, 40));
 		lblNewLabel_1.setBounds(49, 25, 254, 56);
 		contentPane.add(lblNewLabel_1);
-		
+
 		JButton btnTelaEscolherCad = new JButton("Iniciar");
 		btnTelaEscolherCad.setFont(new Font("Segoe UI", Font.PLAIN, 33));
 		btnTelaEscolherCad.setBackground(Color.YELLOW);
@@ -70,17 +71,17 @@ public class TelaInicio extends JFrame {
 		});
 		btnTelaEscolherCad.setBounds(49, 400, 256, 47);
 		contentPane.add(btnTelaEscolherCad);
-		
+
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Aluno\\Downloads\\images.jpg"));
 		lblNewLabel.setBounds(44, 77, 270, 217);
 		contentPane.add(lblNewLabel);
-		
+
 		JLabel lblNewLabel_2 = new JLabel("New label");
 		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\Aluno\\Downloads\\Design sem nome (2).png"));
 		lblNewLabel_2.setBounds(-352, 249, 537, 166);
 		contentPane.add(lblNewLabel_2);
-		
+
 		JLabel lblNewLabel_3 = new JLabel("New label");
 		lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\Aluno\\Downloads\\Design sem nome (4).png"));
 		lblNewLabel_3.setBounds(-171, 217, 485, 230);

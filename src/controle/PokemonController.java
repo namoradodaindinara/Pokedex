@@ -10,20 +10,10 @@ public class PokemonController implements IPokemonController {
 	private static ArrayList<Pokemon> tabelaPokemon;
 	private static PokemonController instancia;
 
-	/**
-	 * PADRAO SINGLETON
-	 */
 	private PokemonController() {
 	}
 
-	/**
-	 * METODO QUE POSSIBILITA INSTANCIAR A CLASSE SEM QUE CRIE NOVOS OBJETOS NA
-	 * MEMORIA.
-	 * 
-	 * OU SEJA, SEMPRE MANIPULANDO O MESMO ESPACO/OBJETO/VARIAVEL NA MEMORIA RAM
-	 * 
-	 * @return
-	 */
+
 	public static PokemonController getInstancia() {
 
 		if (instancia == null) {
@@ -50,8 +40,6 @@ public class PokemonController implements IPokemonController {
 
 			if (p.getId() == id) {
 				p.setNome(p.getNome());
-
-				// TODO finalizar o alterar
 				return true;
 			}
 		}
@@ -76,10 +64,6 @@ public class PokemonController implements IPokemonController {
 		return tabelaPokemon;
 	}
 
-	@Override
-	public ArrayList<Pokemon> listaPokemons() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 }

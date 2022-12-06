@@ -10,6 +10,6 @@ public interface IPokemonController {
 
 	public boolean deletar(Pokemon p, int id);
 
-	public ArrayList<Pokemon> listaPokemons();
+	public ArrayList<Pokemon> listaPokemon();
 
 }
