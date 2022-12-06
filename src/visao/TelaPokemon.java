@@ -21,6 +21,9 @@ import javax.swing.JComboBox;
 import java.awt.Font;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTable;
+import javax.swing.border.BevelBorder;
+import javax.swing.table.DefaultTableModel;
 
 public class TelaPokemon extends JFrame {
 
@@ -30,8 +33,9 @@ public class TelaPokemon extends JFrame {
 	private JTextField txtAltura;
 	String text = "";
 	String select = "";
-	
-	
+	private JTable table;
+	private DefaultTableModel model;
+
 	/**
 	 * Create the frame.
 	 */
@@ -41,9 +45,11 @@ public class TelaPokemon extends JFrame {
 	}
 
 	private void initialize() {
+		PokemonController instance = PokemonController.getInstancia();
+		ArrayList<Pokemon> arrayPokemon = instance.listaPokemon();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 577, 393);
+		setBounds(100, 100, 686, 462);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(220, 20, 60));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -114,13 +120,29 @@ public class TelaPokemon extends JFrame {
 		txtPeso.setBounds(107, 104, 139, 20);
 		contentPane.add(txtPeso);
 		txtPeso.setColumns(10);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(56, 256, 570, 128);
+		contentPane.add(scrollPane);
 
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		
+		model = new DefaultTableModel();
+		table.setModel(model);
+		model.addColumn("Pokémon");
+		model.addColumn("Peso");
+		model.addColumn("Altura");
+		model.addColumn("Tipo");
+		model.addColumn("Região");
+		
 		JLabel lblNewLabel_1_1 = new JLabel("Peso:");
 		lblNewLabel_1_1.setForeground(new Color(255, 255, 0));
 		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_1_1.setBounds(0, 107, 100, 14);
 		contentPane.add(lblNewLabel_1_1);
 
+		
 		txtAltura = new JTextField();
 		txtAltura.setBounds(107, 135, 139, 20);
 		contentPane.add(txtAltura);
@@ -137,20 +159,13 @@ public class TelaPokemon extends JFrame {
 		lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_2_1.setBounds(13, 201, 86, 14);
 		contentPane.add(lblNewLabel_2_1);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(271, 135, 268, 165);
-		contentPane.add(scrollPane);
-		
-		JTextArea textArea = new JTextArea();
-		scrollPane.setViewportView(textArea);
-		
+
 		JButton btnCadPokemon = new JButton("Cadastrar");
 		btnCadPokemon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Pokemon p = new Pokemon();
-				PokemonController controller = PokemonController.getInstancia();
-				
+
+				PokemonController pc = new PokemonController();
 
 				if (txtNamePokemon.getText().isEmpty() || txtNamePokemon.getText() == null) {
 					JOptionPane.showMessageDialog(null, "Campo obrigatório: Pokemon");
@@ -166,39 +181,36 @@ public class TelaPokemon extends JFrame {
 					JOptionPane.showMessageDialog(null, "Campo obrigatório: Região");
 				} else {
 
-					boolean inserir = controller.inserir(p);
-					
-					
-					
-				
-						p.setNome(txtNamePokemon.getText().toString());
-						p.setPeso(Double.valueOf(txtPeso.getText()));
-						p.setAltura(Double.valueOf(txtAltura.getText()));
-						p.setTipo(comboBoxTipo.getSelectedItem().toString());
-						p.setRegiao(comboBoxRegiao.getSelectedItem().toString());
-					
-						
-						controller.inserir(p);
-						
-						if (text.contains(txtNamePokemon.getText())) {
-							JOptionPane.showMessageDialog(null, "Pokemon já cadastrado");
-						} else {
-							for(int i = 0; i < controller.listaPokemon().size(); i++) {
-								select = "------------------------------" + "\nNome: " + controller.listaPokemon().get(i).getNome() + "\nPeso: " + + controller.listaPokemon().get(i).getPeso() + "\nAltura: " + + controller.listaPokemon().get(i).getAltura() + "\nTipo: " + controller.listaPokemon().get(i).getTipo() + "\nRegião: " + controller.listaPokemon().get(i).getRegiao() + "\n";
-							}
+					p.setNome(txtNamePokemon.getText().toString());
+					p.setPeso(Double.valueOf(txtPeso.getText()));
+					p.setAltura(Double.valueOf(txtAltura.getText()));
+					p.setTipo(comboBoxTipo.getSelectedItem().toString());
+					p.setRegiao(comboBoxRegiao.getSelectedItem().toString());
 
-							text += select;
-							textArea.setText(text);
-			
-						}
+					PokemonController controller = PokemonController.getInstancia();
+					boolean inserir = controller.inserir(p);
+
+					for (Pokemon p1 : arrayPokemon) {
+						Object[] pok = new Object[5];
+						pok[0] = p1.getNome();
+						pok[1] = p1.getPeso();
+						pok[2] = p1.getAltura();
+						pok[3] = p1.getTipo();
+						pok[4] = p1.getRegiao();
+						
+						model.addRow(pok);
+					}
+					
+					
 
 				}
 
 			}
+
 		});
+
 		btnCadPokemon.setBounds(271, 72, 187, 39);
 		contentPane.add(btnCadPokemon);
-		
 
 	}
 }

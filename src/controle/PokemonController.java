@@ -10,7 +10,7 @@ public class PokemonController implements IPokemonController {
 	private static ArrayList<Pokemon> tabelaPokemon;
 	private static PokemonController instancia;
 
-	private PokemonController() {
+	public PokemonController() {
 	}
 
 
@@ -34,12 +34,12 @@ public class PokemonController implements IPokemonController {
 	}
 
 	// UPDATE
-	public boolean alterar(Pokemon p, int id) {
+	public boolean alterar(Pokemon p, String nome) {
 
 		for (Pokemon pok : tabelaPokemon) {
 
-			if (p.getId() == id) {
-				p.setNome(p.getNome());
+			if (pok.getNome() == nome) {
+				pok.setNome(pok.getNome());
 				return true;
 			}
 		}
@@ -47,10 +47,10 @@ public class PokemonController implements IPokemonController {
 	}
 
 	// DELETE
-	public boolean deletar(Pokemon p, int id) {
+	public boolean deletar(Pokemon p, String nome) {
 
 		for (Pokemon pok : tabelaPokemon) {
-			if (p.getId() == id) {
+			if (p.getNome() == nome) {
 				tabelaPokemon.remove(p);
 				return true;
 			}
