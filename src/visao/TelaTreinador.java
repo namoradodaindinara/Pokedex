@@ -42,29 +42,29 @@ public class TelaTreinador extends JFrame {
 
 		JLabel lblNewLabel_1 = new JLabel("Nome");
 		lblNewLabel_1.setForeground(new Color(255, 255, 0));
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_1.setBounds(10, 73, 33, 14);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_1.setBounds(10, 73, 41, 14);
 		contentPane.add(lblNewLabel_1);
 
 		JLabel lblNewLabel_2 = new JLabel("CPF");
 		lblNewLabel_2.setForeground(new Color(255, 255, 0));
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2.setBounds(10, 131, 33, 14);
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_2.setBounds(10, 131, 41, 14);
 		contentPane.add(lblNewLabel_2);
 
 		textField = new JTextField();
-		textField.setBounds(53, 71, 131, 20);
+		textField.setBounds(55, 71, 131, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
 
 		textField_1 = new JTextField();
-		textField_1.setBounds(53, 129, 131, 20);
+		textField_1.setBounds(55, 129, 131, 20);
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
 
 		JButton btnCadTreinador = new JButton("Cadastrar");
 		btnCadTreinador.setBackground(Color.WHITE);
-		btnCadTreinador.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnCadTreinador.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnCadTreinador.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
