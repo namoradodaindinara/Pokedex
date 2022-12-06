@@ -63,7 +63,7 @@ public class TelaTreinador extends JFrame {
 		textField_1.setColumns(10);
 
 		JButton btnCadTreinador = new JButton("Cadastrar");
-		btnCadTreinador.setBackground(new Color(255, 255, 0));
+		btnCadTreinador.setBackground(Color.WHITE);
 		btnCadTreinador.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnCadTreinador.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
