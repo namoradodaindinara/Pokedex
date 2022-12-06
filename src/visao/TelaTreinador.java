@@ -10,6 +10,9 @@ import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import java.awt.Font;
+import javax.swing.JComboBox;
+import javax.swing.JTextArea;
 
 public class TelaTreinador extends JFrame {
 
@@ -24,34 +27,44 @@ public class TelaTreinador extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(220, 20, 60));
+		contentPane.setForeground(new Color(0, 0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("Cadastre o Treinador");
-		lblNewLabel.setBounds(163, 21, 122, 14);
+		lblNewLabel.setForeground(new Color(255, 255, 0));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblNewLabel.setBounds(137, 13, 180, 14);
 		contentPane.add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("Nome");
-		lblNewLabel_1.setBounds(105, 76, 33, 14);
+		lblNewLabel_1.setForeground(new Color(255, 255, 0));
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_1.setBounds(10, 73, 33, 14);
 		contentPane.add(lblNewLabel_1);
 
 		JLabel lblNewLabel_2 = new JLabel("CPF");
-		lblNewLabel_2.setBounds(261, 76, 24, 14);
+		lblNewLabel_2.setForeground(new Color(255, 255, 0));
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_2.setBounds(10, 131, 33, 14);
 		contentPane.add(lblNewLabel_2);
 
 		textField = new JTextField();
-		textField.setBounds(78, 101, 86, 20);
+		textField.setBounds(53, 71, 131, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
 
 		textField_1 = new JTextField();
-		textField_1.setBounds(238, 101, 86, 20);
+		textField_1.setBounds(53, 129, 131, 20);
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
 
 		JButton btnCadTreinador = new JButton("Cadastrar");
+		btnCadTreinador.setBackground(new Color(255, 255, 0));
+		btnCadTreinador.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnCadTreinador.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -62,7 +75,7 @@ public class TelaTreinador extends JFrame {
 				}
 			}
 		});
-		btnCadTreinador.setBounds(163, 190, 103, 23);
+		btnCadTreinador.setBounds(137, 214, 145, 23);
 		contentPane.add(btnCadTreinador);
 
 		JButton btnBack = new JButton("<");
@@ -77,5 +90,9 @@ public class TelaTreinador extends JFrame {
 		});
 		btnBack.setBounds(10, 11, 41, 23);
 		contentPane.add(btnBack);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(218, 69, 206, 133);
+		contentPane.add(textArea);
 	}
 }
