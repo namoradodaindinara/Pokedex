@@ -13,7 +13,6 @@ public class PokemonController implements IPokemonController {
 	public PokemonController() {
 	}
 
-
 	public static PokemonController getInstancia() {
 
 		if (instancia == null) {
@@ -51,7 +50,25 @@ public class PokemonController implements IPokemonController {
 		return tabelaPokemon;
 	}
 
+	public boolean alterar(Pokemon p, int id) {
+		for (Pokemon pok : tabelaPokemon) {
 
+			if (p.getId() == id) {
+				pok.setNome(p.getNome());
+				return true;
+			}
+		}
+		return false;
+	}
 
+	@Override
+	public Pokemon buscarPokemonPorId(Integer id) {
+		for (Pokemon pokemon : tabelaPokemon) {
+			if (pokemon.getId() == id) {
+				return pokemon;
+			}
+		}
+		return null;
+	}
 
 }

@@ -1,29 +1,26 @@
 package visao;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import controle.PokemonController;
 import modelo.Pokemon;
-
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.awt.event.ActionEvent;
-import javax.swing.SwingConstants;
-import javax.swing.JComboBox;
-import java.awt.Font;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTable;
-import javax.swing.border.BevelBorder;
-import javax.swing.table.DefaultTableModel;
 
 public class TelaPokemon extends JFrame {
 
@@ -32,8 +29,9 @@ public class TelaPokemon extends JFrame {
 	private JTextField txtPeso;
 	private JTextField txtAltura;
 	String text = "";
-	private JTable table;
+	private JTable tablePokemons;
 	private DefaultTableModel model;
+	private Pokemon pokemonAEditar;
 
 	/**
 	 * Create the frame.
@@ -48,7 +46,7 @@ public class TelaPokemon extends JFrame {
 		ArrayList<Pokemon> arrayPokemon = instance.listaPokemon();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 528, 445);
+		setBounds(100, 100, 598, 496);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(220, 20, 60));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -60,39 +58,39 @@ public class TelaPokemon extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Segoe UI Black", Font.PLAIN, 17));
 		lblNewLabel.setForeground(new Color(255, 255, 0));
-		lblNewLabel.setBounds(156, 8, 203, 37);
+		lblNewLabel.setBounds(190, 23, 203, 37);
 		contentPane.add(lblNewLabel);
 
-		JLabel lblNewLabel_1 = new JLabel("Pokémon:");
+		JLabel lblNewLabel_1 = new JLabel("Pokï¿½mon:");
 		lblNewLabel_1.setForeground(new Color(255, 255, 0));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1.setBounds(-11, 68, 100, 14);
+		lblNewLabel_1.setBounds(25, 114, 100, 14);
 		contentPane.add(lblNewLabel_1);
 
 		JLabel lblNewLabel_2 = new JLabel("Tipo:");
 		lblNewLabel_2.setForeground(new Color(255, 255, 0));
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_2.setBounds(59, 162, 30, 14);
+		lblNewLabel_2.setBounds(95, 208, 30, 14);
 		contentPane.add(lblNewLabel_2);
 
 		txtNamePokemon = new JTextField();
-		txtNamePokemon.setBounds(96, 65, 139, 20);
+		txtNamePokemon.setBounds(132, 111, 139, 20);
 		contentPane.add(txtNamePokemon);
 		txtNamePokemon.setColumns(10);
 
 		JComboBox<String> comboBoxRegiao = new JComboBox();
-		comboBoxRegiao.setBounds(96, 189, 139, 22);
+		comboBoxRegiao.setBounds(132, 235, 139, 22);
 		contentPane.add(comboBoxRegiao);
 
 		JComboBox<String> comboBoxTipo = new JComboBox();
-		comboBoxTipo.setBounds(96, 158, 139, 22);
+		comboBoxTipo.setBounds(132, 204, 139, 22);
 		contentPane.add(comboBoxTipo);
 
-		String[] tipos = { "Selecione o tipo", "Água", "Dragão", "Elétrico", "Fada", "Fantasma", "Ferro", "Fogo",
-				"Gelo", "Grama", "Inseto", "Lutador", "Normal", "Pedra", "Planta", "Psiquíco", "Terra", "Veneno",
+		String[] tipos = { "Selecione o tipo", "ï¿½gua", "Dragï¿½o", "Elï¿½trico", "Fada", "Fantasma", "Ferro", "Fogo",
+				"Gelo", "Grama", "Inseto", "Lutador", "Normal", "Pedra", "Planta", "Psiquï¿½co", "Terra", "Veneno",
 				"Voador" };
 
-		String[] regiao = { "Selecione a região", "Kanto (KA)", "Johto (JO)", "Hoenn (HO)", "Sinnoh (SI)", "Unova (UN)",
+		String[] regiao = { "Selecione a regiï¿½o", "Kanto (KA)", "Johto (JO)", "Hoenn (HO)", "Sinnoh (SI)", "Unova (UN)",
 				"Kalos (KL)", "Alola (AL)" };
 
 		for (int i = 0; i < tipos.length; i++) {
@@ -113,50 +111,87 @@ public class TelaPokemon extends JFrame {
 			}
 		});
 		btnBack.setForeground(new Color(0, 0, 0));
-		btnBack.setBounds(10, 18, 41, 23);
+		btnBack.setBounds(12, 12, 41, 23);
 		contentPane.add(btnBack);
 
 		txtPeso = new JTextField();
-		txtPeso.setBounds(96, 96, 139, 20);
+		txtPeso.setBounds(132, 142, 139, 20);
 		contentPane.add(txtPeso);
 		txtPeso.setColumns(10);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(60, 245, 407, 128);
+		scrollPane.setBounds(56, 294, 473, 128);
 		contentPane.add(scrollPane);
 
-		table = new JTable();
-		scrollPane.setViewportView(table);
+		tablePokemons = new JTable();
+//		tablePokemons.setRowSelectionAllowed(false);
+//		tablePokemons.setShowGrid(false);
+//		tablePokemons.setShowHorizontalLines(false);
+//		tablePokemons.setShowVerticalLines(false);
+//		tablePokemons.setSurrendersFocusOnKeystroke(true);
+		scrollPane.setViewportView(tablePokemons);
 
 		model = new DefaultTableModel();
-		table.setModel(model);
-		model.addColumn("Pokémon");
+		tablePokemons.setModel(model);
+		model.addColumn("ID");
+		model.addColumn("Pokï¿½mon");
 		model.addColumn("Peso");
 		model.addColumn("Altura");
 		model.addColumn("Tipo");
-		model.addColumn("Região");
+		model.addColumn("Regiï¿½o");
 
+		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				boolean valida = instance.alterar(pokemonAEditar, pokemonAEditar.getId());
+				if (valida) {
+					JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
+				} else {
+					JOptionPane.showMessageDialog(null, "NÃ£o foi possÃ­vel alterar.");
+				}
+			}
+		});
+		btnSalvar.setBounds(300, 156, 187, 55);
+		contentPane.add(btnSalvar);
+		
 		JLabel lblNewLabel_1_1 = new JLabel("Peso:");
 		lblNewLabel_1_1.setForeground(new Color(255, 255, 0));
 		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1.setBounds(-11, 99, 100, 14);
+		lblNewLabel_1_1.setBounds(25, 145, 100, 14);
 		contentPane.add(lblNewLabel_1_1);
 
 		txtAltura = new JTextField();
-		txtAltura.setBounds(96, 127, 139, 20);
+		txtAltura.setBounds(132, 173, 139, 20);
 		contentPane.add(txtAltura);
 		txtAltura.setColumns(10);
 
+		btnSalvar.setVisible(false);
+		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Altura:");
 		lblNewLabel_1_1_1.setForeground(new Color(255, 255, 0));
 		lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1_1.setBounds(-11, 130, 100, 14);
+		lblNewLabel_1_1_1.setBounds(25, 176, 100, 14);
 		contentPane.add(lblNewLabel_1_1_1);
 
-		JLabel lblNewLabel_2_1 = new JLabel("Região:");
+		for (Pokemon p1 : arrayPokemon) {
+			Object[] pok = new Object[6];
+			pok[0] = p1.getId();
+			pok[1] = p1.getNome();
+			pok[2] = p1.getPeso();
+			pok[3] = p1.getAltura();
+			pok[4] = p1.getTipo();
+			pok[5] = p1.getRegiao();
+
+			model.addRow(pok);
+		}
+
+		
+		
+		JLabel lblNewLabel_2_1 = new JLabel("Regiï¿½o:");
 		lblNewLabel_2_1.setForeground(new Color(255, 255, 0));
 		lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_2_1.setBounds(2, 193, 86, 14);
+		lblNewLabel_2_1.setBounds(38, 239, 86, 14);
 		contentPane.add(lblNewLabel_2_1);
 
 		JButton btnCadPokemon = new JButton("Cadastrar pok\u00E9mon");
@@ -169,17 +204,17 @@ public class TelaPokemon extends JFrame {
 					try {
 						Double.parseDouble(txtAltura.getText());
 						if (txtNamePokemon.getText().isEmpty() || txtNamePokemon.getText() == null) {
-							JOptionPane.showMessageDialog(null, "Campo obrigatório: Pokemon");
+							JOptionPane.showMessageDialog(null, "Campo obrigatï¿½rio: Pokemon");
 						} else if (txtPeso.getText().isEmpty() || txtAltura.getText() == null) {
-							JOptionPane.showMessageDialog(null, "Campo obrigatório: Peso");
+							JOptionPane.showMessageDialog(null, "Campo obrigatï¿½rio: Peso");
 						} else if (txtAltura.getText().isEmpty() || txtPeso.getText() == null) {
-							JOptionPane.showMessageDialog(null, "Campo obrigatório: Altura");
+							JOptionPane.showMessageDialog(null, "Campo obrigatï¿½rio: Altura");
 						} else if (txtPeso.getText().isEmpty() || txtPeso.getText() == null) {
-							JOptionPane.showMessageDialog(null, "Campo obrigatório: Peso");
+							JOptionPane.showMessageDialog(null, "Campo obrigatï¿½rio: Peso");
 						} else if (comboBoxTipo.getSelectedItem().equals("Selecione o tipo")) {
-							JOptionPane.showMessageDialog(null, "Campo obrigatório: Tipo");
-						} else if (comboBoxRegiao.getSelectedItem().equals("Selecione a região")) {
-							JOptionPane.showMessageDialog(null, "Campo obrigatório: Região");
+							JOptionPane.showMessageDialog(null, "Campo obrigatï¿½rio: Tipo");
+						} else if (comboBoxRegiao.getSelectedItem().equals("Selecione a regiï¿½o")) {
+							JOptionPane.showMessageDialog(null, "Campo obrigatï¿½rio: Regiï¿½o");
 						} else {
 
 							for (int i = 0; i < arrayPokemon.size(); i++) {
@@ -188,6 +223,7 @@ public class TelaPokemon extends JFrame {
 
 							if (!text.contains(txtNamePokemon.getText())) {
 								model.getDataVector().removeAllElements();
+								p.setId(arrayPokemon.size() + 1);
 								p.setNome(txtNamePokemon.getText().toString());
 								p.setPeso(Double.valueOf(txtPeso.getText()));
 								p.setAltura(Double.valueOf(txtAltura.getText()));
@@ -196,78 +232,60 @@ public class TelaPokemon extends JFrame {
 
 								boolean inserir = instance.inserir(p);
 
-								JOptionPane.showMessageDialog(null, "Pokémon cadastrado com sucesso!");
+								JOptionPane.showMessageDialog(null, "Pokï¿½mon cadastrado com sucesso!");
 
 								for (Pokemon p1 : arrayPokemon) {
-									Object[] pok = new Object[5];
-									pok[0] = p1.getNome();
-									pok[1] = p1.getPeso();
-									pok[2] = p1.getAltura();
-									pok[3] = p1.getTipo();
-									pok[4] = p1.getRegiao();
+									Object[] pok = new Object[6];
+									pok[0] = p1.getId();
+									pok[1] = p1.getNome();
+									pok[2] = p1.getPeso();
+									pok[3] = p1.getAltura();
+									pok[4] = p1.getTipo();
+									pok[5] = p1.getRegiao();
 
 									model.addRow(pok);
 								}
+								
+								txtNamePokemon.setText("");
+								txtPeso.setText("");
+								txtAltura.setText("");
+								comboBoxTipo.setSelectedIndex(0);
+								comboBoxRegiao.setSelectedIndex(0);
 
 							} else {
-								JOptionPane.showMessageDialog(null, "Esse pokémon já foi adicionado na pokédex!");
+								JOptionPane.showMessageDialog(null, "Esse pokï¿½mon jï¿½ foi adicionado na pokï¿½dex!");
 							}
 
 						}
 
 					} catch (NumberFormatException e1) {
 						JOptionPane.showMessageDialog(null,
-								"Erro em campo: Altura. Você deve digitar um valor numérico nesse campo.");
+								"Erro em campo: Altura. Vocï¿½ deve digitar um valor numï¿½rico nesse campo.");
 					}
 				} catch (NumberFormatException e2) {
 					JOptionPane.showMessageDialog(null,
-							"Erro em campo: Peso. Você deve digitar um valor numérico nesse campo.");
+							"Erro em campo: Peso. Vocï¿½ deve digitar um valor numï¿½rico nesse campo.");
 				}
 
 			}
 
 		});
 
-		btnCadPokemon.setBounds(264, 59, 187, 46);
+		btnCadPokemon.setBounds(300, 95, 187, 46);
 		contentPane.add(btnCadPokemon);
-
-		JButton btnMostrar = new JButton("Mostrar cadastros");
-		btnMostrar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				if (!arrayPokemon.isEmpty()) {
-					model.getDataVector().removeAllElements();
-					for (Pokemon p1 : arrayPokemon) {
-						Object[] pok = new Object[5];
-						pok[0] = p1.getNome();
-						pok[1] = p1.getPeso();
-						pok[2] = p1.getAltura();
-						pok[3] = p1.getTipo();
-						pok[4] = p1.getRegiao();
-
-						model.addRow(pok);
-					}
-				} else {
-					JOptionPane.showMessageDialog(null, "Nenhum pokémon cadastrado.");
-				}
-
-			}
-		});
-		btnMostrar.setBounds(265, 109, 187, 49);
-		contentPane.add(btnMostrar);
 
 		JButton btnDeletar = new JButton("Deletar cadastro");
 		btnDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Pokemon p = new Pokemon();
-				if (table.getSelectedRow() >= 0) {
-					if (table.getSelectedColumn() == 0) {
-						instance.deletar(p,
-								String.valueOf(table.getValueAt(table.getSelectedRow(), table.getSelectedColumn())));
-						model.removeRow(table.getSelectedRow());
-						table.setModel(model);
+				if (tablePokemons.getSelectedRow() >= 0) {
+					if (tablePokemons.getSelectedColumn() == 1) {
+						instance.deletar(p, String.valueOf(tablePokemons.getValueAt(tablePokemons.getSelectedRow(),
+								tablePokemons.getSelectedColumn())));
+						model.removeRow(tablePokemons.getSelectedRow());
+						tablePokemons.setModel(model);
 					} else {
-						JOptionPane.showMessageDialog(null, "Selecione uma célula da coluna 'Pokémon'.");
+						JOptionPane.showMessageDialog(null, "Selecione uma cï¿½lula da coluna 'Pokï¿½mon'.");
 					}
 
 				} else {
@@ -275,8 +293,39 @@ public class TelaPokemon extends JFrame {
 				}
 			}
 		});
-		btnDeletar.setBounds(265, 162, 187, 49);
+		btnDeletar.setBounds(300, 153, 187, 49);
 		contentPane.add(btnDeletar);
+
+		JButton btnAlt = new JButton("Alterar");
+		btnAlt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if (tablePokemons.getSelectedRow() >= 0) {
+					btnDeletar.setVisible(false);
+					btnAlt.setVisible(false);
+					btnCadPokemon.setVisible(false);
+					btnSalvar.setVisible(true);
+					
+					int linha = tablePokemons.getSelectedRow();
+					Integer idPokemon = (Integer) tablePokemons.getValueAt(linha, 0);
+					pokemonAEditar = instance.buscarPokemonPorId(idPokemon);
+
+					txtNamePokemon.setText(pokemonAEditar.getNome());
+					txtPeso.setText(String.valueOf(pokemonAEditar.getPeso()));
+					txtAltura.setText(String.valueOf(pokemonAEditar.getAltura()));
+					comboBoxTipo.setSelectedItem(pokemonAEditar.getTipo());
+					comboBoxRegiao.setSelectedItem(pokemonAEditar.getRegiao());
+
+				} else {
+					JOptionPane.showMessageDialog(null, "Selecione uma linha para alterar.");
+				}
+				
+			}
+		});
+		btnAlt.setBounds(300, 217, 187, 46);
+		contentPane.add(btnAlt);
+
+		
 
 	}
 }
