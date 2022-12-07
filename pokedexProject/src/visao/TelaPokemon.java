@@ -140,18 +140,6 @@ public class TelaPokemon extends JFrame {
 		model.addColumn("Tipo");
 		model.addColumn("Regi�o");
 
-		JButton btnSalvar = new JButton("Salvar");
-		btnSalvar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				boolean valida = instance.alterar(pokemonAEditar, pokemonAEditar.getId());
-				if (valida) {
-					JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
-				} else {
-					JOptionPane.showMessageDialog(null, "Não foi possível alterar.");
-				}
-			}
-		});
 		btnSalvar.setBounds(300, 156, 187, 55);
 		contentPane.add(btnSalvar);
 		
@@ -186,8 +174,6 @@ public class TelaPokemon extends JFrame {
 			model.addRow(pok);
 		}
 
-		
-		
 		JLabel lblNewLabel_2_1 = new JLabel("Regi�o:");
 		lblNewLabel_2_1.setForeground(new Color(255, 255, 0));
 		lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -273,7 +259,7 @@ public class TelaPokemon extends JFrame {
 
 		btnCadPokemon.setBounds(300, 95, 187, 46);
 		contentPane.add(btnCadPokemon);
-
+		
 		JButton btnDeletar = new JButton("Deletar cadastro");
 		btnDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -325,6 +311,23 @@ public class TelaPokemon extends JFrame {
 		btnAlt.setBounds(300, 217, 187, 46);
 		contentPane.add(btnAlt);
 
+		
+		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				boolean valida = instance.alterar(pokemonAEditar, pokemonAEditar.getId());
+				if (valida) {
+					JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
+					btnSalvar.setVisible(false);
+					btnDeletar.setVisible(true);
+					btnAlt.setVisible(true);
+					btnCadPokemon.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(null, "Não foi possível alterar.");
+				}
+			}
+		});
 		
 
 	}
