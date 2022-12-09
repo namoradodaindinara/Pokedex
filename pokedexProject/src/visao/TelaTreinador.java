@@ -37,8 +37,9 @@ public class TelaTreinador extends JFrame {
 	private JTextField txtPeso;
 	private JTextField txtAltura;
 	String text = "";
-	private JTable table;
+	private JTable tableTreinadores;
 	private DefaultTableModel model;
+	private Treinador treinadorAEditar;
 
 	/**
 	 * Launch the application.
@@ -71,14 +72,13 @@ public class TelaTreinador extends JFrame {
 		JComboBox<String> comboBoxPok = new JComboBox();
 		comboBoxPok.setBounds(165, 221, 174, 22);
 		contentPane.add(comboBoxPok);
-		comboBoxPok.addItem("Selecione um pokémon:");
-
+		comboBoxPok.addItem("Selecione um pokï¿½mon:");
 		if (!(poks.size() == 0)) {
 			for (int i = 0; i < poks.size(); i++) {
 				comboBoxPok.addItem(instanciaPok.listaPokemon().get(i).getNome());
 			}
 		} else {
-			comboBoxPok.addItem("(Sem pokémon)");
+			comboBoxPok.addItem("(Sem pokï¿½mon)");
 		}
 
 		setContentPane(contentPane);
@@ -88,17 +88,31 @@ public class TelaTreinador extends JFrame {
 		scrollPane.setBounds(79, 265, 562, 128);
 		contentPane.add(scrollPane);
 
-		table = new JTable();
-		scrollPane.setViewportView(table);
+		tableTreinadores = new JTable();
+		scrollPane.setViewportView(tableTreinadores);
 
 		model = new DefaultTableModel();
-		table.setModel(model);
+		tableTreinadores.setModel(model);
+		model.addColumn("ID");
 		model.addColumn("Treinador");
 		model.addColumn("Peso");
 		model.addColumn("Altura");
 		model.addColumn("Data de Nasc.");
 		model.addColumn("CPF");
-		model.addColumn("Pokémon fav.");
+		model.addColumn("Pokï¿½mon fav.");
+
+		for (Treinador t : arrayTreinadores) {
+			Object[] pok = new Object[7];
+			pok[0] = t.getId();
+			pok[1] = t.getNome();
+			pok[2] = t.getPeso();
+			pok[3] = t.getAltura();
+			pok[4] = t.getDateNasc();
+			pok[5] = t.getCpf();
+			pok[6] = t.getPokFav();
+
+			model.addRow(pok);
+		}
 
 		JLabel lblNewLabel_2_1 = new JLabel("Data de nasc:");
 		lblNewLabel_2_1.setBounds(27, 162, 126, 14);
@@ -178,19 +192,19 @@ public class TelaTreinador extends JFrame {
 
 				try {
 					Double.parseDouble(txtPeso.getText());
-					
+
 					try {
 						Double.parseDouble(txtAltura.getText());
 						if (txtNomeTreinador.getText().isEmpty() || txtNomeTreinador.getText() == null) {
-							JOptionPane.showMessageDialog(null, "Campo obrigatório: Treinador");
+							JOptionPane.showMessageDialog(null, "Campo obrigatï¿½rio: Treinador");
 						} else if (txtAltura.getText().isEmpty() || txtPeso.getText() == null) {
-							JOptionPane.showMessageDialog(null, "Campo obrigatório: Altura");
-						} else if (comboBoxPok.getSelectedItem().equals("Selecione um pokémon:")) {
-							JOptionPane.showMessageDialog(null, "Campo obrigatório: Pokémon favorito.");
+							JOptionPane.showMessageDialog(null, "Campo obrigatï¿½rio: Altura");
+						} else if (comboBoxPok.getSelectedItem().equals("Selecione um pokï¿½mon:")) {
+							JOptionPane.showMessageDialog(null, "Campo obrigatï¿½rio: Pokï¿½mon favorito.");
 						} else if (txtCpf.getText().equals("   .   .   -  ") || txtCpf.getText() == null) {
-							JOptionPane.showMessageDialog(null, "Campo obrigatório: CPF");
+							JOptionPane.showMessageDialog(null, "Campo obrigatï¿½rio: CPF");
 						} else if (txtData.getText().equals("  /  /    ") || txtData.getText() == null) {
-							JOptionPane.showMessageDialog(null, "Campo obrigatório: Data de nasc");
+							JOptionPane.showMessageDialog(null, "Campo obrigatï¿½rio: Data de nasc");
 						} else {
 
 							for (int i = 0; i < arrayTreinadores.size(); i++) {
@@ -198,9 +212,10 @@ public class TelaTreinador extends JFrame {
 							}
 
 							if (txtCpf.getText().length() != 14) {
-								JOptionPane.showMessageDialog(null, "CPF inválido. Tente novamente.");
+								JOptionPane.showMessageDialog(null, "CPF invï¿½lido. Tente novamente.");
 							} else if (!text.contains(txtCpf.getText())) {
 								model.getDataVector().removeAllElements();
+								t.setId(arrayTreinadores.size() + 1);
 								t.setNome(txtNomeTreinador.getText());
 								t.setPeso(Double.valueOf(txtPeso.getText()));
 								t.setAltura(Double.valueOf(txtAltura.getText()));
@@ -213,80 +228,141 @@ public class TelaTreinador extends JFrame {
 								JOptionPane.showMessageDialog(null, "Treinador cadastrado com sucesso!");
 
 								for (Treinador t1 : arrayTreinadores) {
-									Object[] tre = new Object[6];
-									tre[0] = t1.getNome();
-									tre[1] = t1.getPeso();
-									tre[2] = t1.getAltura();
-									tre[3] = t1.getDateNasc();
-									tre[4] = t1.getCpf();
-									tre[5] = t1.getPokFav();
+									Object[] tre = new Object[7];
+									tre[0] = t1.getId();
+									tre[1] = t1.getNome();
+									tre[2] = t1.getPeso();
+									tre[3] = t1.getAltura();
+									tre[4] = t1.getDateNasc();
+									tre[5] = t1.getCpf();
+									tre[6] = t1.getPokFav();
 
 									model.addRow(tre);
 								}
 							} else {
-								JOptionPane.showMessageDialog(null, "Esse treinador já foi adicionado!");
+								JOptionPane.showMessageDialog(null, "Esse treinador jï¿½ foi adicionado!");
 							}
 
 						}
-						
-						
+
 					} catch (NumberFormatException e1) {
-						JOptionPane.showMessageDialog(null, "Erro em campo: Altura. Você deve digitar um valor numérico nesse campo.");
+						JOptionPane.showMessageDialog(null,
+								"Erro em campo: Altura. Vocï¿½ deve digitar um valor numï¿½rico nesse campo.");
 					}
 				} catch (NumberFormatException e1) {
-					JOptionPane.showMessageDialog(null, "Erro em campo: Peso. Você deve digitar um valor numérico nesse campo.");
+					JOptionPane.showMessageDialog(null,
+							"Erro em campo: Peso. Vocï¿½ deve digitar um valor numï¿½rico nesse campo.");
 				}
 
 			}
 		});
+
+		JButton btnDeletar = new JButton("Deletar cadastro");
+		JButton btnAlt = new JButton("Alterar");
+		JButton btnVoltaSalva = new JButton("<- Voltar");
+
 		btnCadTre.setBounds(371, 65, 244, 51);
 		contentPane.add(btnCadTre);
-
-		JButton btnMostrar = new JButton("Mostrar cadastros");
-		btnMostrar.addActionListener(new ActionListener() {
+		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (!arrayTreinadores.isEmpty()) {
-					model.getDataVector().removeAllElements();
-					for (Treinador t1 : arrayTreinadores) {
-						Object[] tre = new Object[6];
-						tre[0] = t1.getNome();
-						tre[1] = t1.getPeso();
-						tre[2] = t1.getAltura();
-						tre[3] = t1.getDateNasc();
-						tre[4] = t1.getCpf();
-						tre[5] = t1.getPokFav();
 
-						model.addRow(tre);
+				boolean valida = instanciaTre.alterar(treinadorAEditar, treinadorAEditar.getId());
+				if (valida) {
+					try {
+						Double.parseDouble(txtPeso.getText());
+
+						try {
+							Double.parseDouble(txtAltura.getText());
+							if (txtNomeTreinador.getText().isEmpty() || txtNomeTreinador.getText() == null) {
+								JOptionPane.showMessageDialog(null, "Campo obrigatï¿½rio: Treinador");
+							} else if (txtAltura.getText().isEmpty() || txtPeso.getText() == null) {
+								JOptionPane.showMessageDialog(null, "Campo obrigatï¿½rio: Altura");
+							} else if (comboBoxPok.getSelectedItem().equals("Selecione um pokï¿½mon:")) {
+								JOptionPane.showMessageDialog(null, "Campo obrigatï¿½rio: Pokï¿½mon favorito.");
+							} else if (txtCpf.getText().equals("   .   .   -  ") || txtCpf.getText() == null) {
+								JOptionPane.showMessageDialog(null, "Campo obrigatï¿½rio: CPF");
+							} else if (txtData.getText().equals("  /  /    ") || txtData.getText() == null) {
+								JOptionPane.showMessageDialog(null, "Campo obrigatï¿½rio: Data de nasc");
+							} else {
+								JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
+
+								model.getDataVector().removeAllElements();
+
+								treinadorAEditar.setId(treinadorAEditar.getId());
+								treinadorAEditar.setNome(txtNomeTreinador.getText());
+								treinadorAEditar.setPeso(Double.valueOf(txtPeso.getText()));
+								treinadorAEditar.setAltura(Double.valueOf(txtAltura.getText()));
+								treinadorAEditar.setCpf(txtCpf.getText());
+								treinadorAEditar.setDateNasc(txtData.getText());
+								treinadorAEditar.setPokFav(comboBoxPok.getSelectedItem().toString());
+
+								for (Treinador t1 : arrayTreinadores) {
+									Object[] tre = new Object[7];
+									tre[0] = t1.getId();
+									tre[1] = t1.getNome();
+									tre[2] = t1.getPeso();
+									tre[3] = t1.getAltura();
+									tre[4] = t1.getDateNasc();
+									tre[5] = t1.getCpf();
+									tre[6] = t1.getPokFav();
+
+									model.addRow(tre);
+								}
+
+								btnVoltaSalva.setVisible(false);
+								btnSalvar.setVisible(false);
+								btnDeletar.setVisible(true);
+								btnAlt.setVisible(true);
+								btnCadTre.setVisible(true);
+								txtNomeTreinador.setText("");
+								txtPeso.setText("");
+								txtAltura.setText("");
+								txtData.setText("");
+								txtCpf.setText("");
+								comboBoxPok.setSelectedIndex(0);
+								
+								txtNomeTreinador.setText("");
+								txtPeso.setText("");
+								txtAltura.setText("");
+								txtData.setText("");
+								txtCpf.setText("");
+								comboBoxPok.setSelectedIndex(0);
+
+							}
+
+						} catch (NumberFormatException e1) {
+							JOptionPane.showMessageDialog(null,
+									"Erro em campo: Altura. Vocï¿½ deve digitar um valor numï¿½rico nesse campo.");
+						}
+					} catch (NumberFormatException e1) {
+						JOptionPane.showMessageDialog(null,
+								"Erro em campo: Peso. Vocï¿½ deve digitar um valor numï¿½rico nesse campo.");
 					}
+
 				} else {
-					JOptionPane.showMessageDialog(null, "Nenhum treinador cadastrado.");
+					JOptionPane.showMessageDialog(null, "NÃ£o foi possÃ­vel alterar.");
 				}
 			}
 		});
-		btnMostrar.setBounds(371, 125, 244, 51);
-		contentPane.add(btnMostrar);
+		btnSalvar.setBounds(371, 110, 244, 61);
+		contentPane.add(btnSalvar);
 
-		JButton btnNewButton_1 = new JButton("Deletar cadastro");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		btnDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Treinador t = new Treinador();
-				if (table.getSelectedRow() >= 0) {
-					if (table.getSelectedColumn() == 4) {
-						instanciaTre.deletar(t,
-								String.valueOf(table.getValueAt(table.getSelectedRow(), table.getSelectedColumn())));
-						model.removeRow(table.getSelectedRow());
-						table.setModel(model);
-					} else {
-						JOptionPane.showMessageDialog(null, "Selecione uma célula da coluna 'CPF'.");
-					}
-
+				if (tableTreinadores.getSelectedRow() >= 0) {
+						instanciaTre.deletar(t, String.valueOf(tableTreinadores
+								.getValueAt(tableTreinadores.getSelectedRow(), tableTreinadores.getSelectedColumn())));
+						model.removeRow(tableTreinadores.getSelectedRow());
+						tableTreinadores.setModel(model);
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecione uma linha para deletar.");
 				}
 			}
 		});
-		btnNewButton_1.setBounds(371, 187, 244, 56);
-		contentPane.add(btnNewButton_1);
+		btnDeletar.setBounds(371, 126, 244, 56);
+		contentPane.add(btnDeletar);
 
 		JLabel lblNewLabel = new JLabel("CADASTRAR TREINADOR");
 		lblNewLabel.setFont(new Font("Segoe UI Black", Font.PLAIN, 17));
@@ -294,6 +370,57 @@ public class TelaTreinador extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(232, 20, 235, 14);
 		contentPane.add(lblNewLabel);
+
+		btnAlt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (tableTreinadores.getSelectedRow() >= 0) {
+					btnDeletar.setVisible(false);
+					btnAlt.setVisible(false);
+					btnCadTre.setVisible(false);
+					btnSalvar.setVisible(true);
+					btnVoltaSalva.setVisible(true);
+
+					int linha = tableTreinadores.getSelectedRow();
+					Integer idTreinador = (Integer) tableTreinadores.getValueAt(linha, 0);
+					treinadorAEditar = instanciaTre.buscarTreinadorPorId(idTreinador);
+
+					txtNomeTreinador.setText(treinadorAEditar.getNome());
+					txtPeso.setText(String.valueOf(treinadorAEditar.getPeso()));
+					txtAltura.setText(String.valueOf(treinadorAEditar.getAltura()));
+					txtData.setText(treinadorAEditar.getDateNasc());
+					txtCpf.setText(treinadorAEditar.getCpf());
+					comboBoxPok.setSelectedItem(treinadorAEditar.getPokFav());
+
+				} else {
+					JOptionPane.showMessageDialog(null, "Selecione uma linha para alterar.");
+				}
+			}
+		});
+		btnAlt.setBounds(371, 193, 244, 50);
+		contentPane.add(btnAlt);
+		
+		
+		btnVoltaSalva.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnVoltaSalva.setVisible(false);
+				btnSalvar.setVisible(false);
+				btnCadTre.setVisible(true);
+				btnDeletar.setVisible(true);
+				btnAlt.setVisible(true);
+				
+				txtNomeTreinador.setText("");
+				txtPeso.setText("");
+				txtAltura.setText("");
+				txtData.setText("");
+				txtCpf.setText("");
+				comboBoxPok.setSelectedIndex(0);
+			}
+		});
+		btnVoltaSalva.setBounds(371, 182, 244, 23);
+		contentPane.add(btnVoltaSalva);
+
+		btnSalvar.setVisible(false);
+		btnVoltaSalva.setVisible(false);
 
 	}
 }

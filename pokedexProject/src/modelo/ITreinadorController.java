@@ -9,5 +9,7 @@ public interface ITreinadorController {
 	public boolean deletar(Treinador t, String nome);
 
 	public ArrayList<Treinador> listaTreinador();
+	
+	public Treinador buscarTreinadorPorId(Integer id);
 
 }

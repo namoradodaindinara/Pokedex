@@ -140,9 +140,6 @@ public class TelaPokemon extends JFrame {
 		model.addColumn("Tipo");
 		model.addColumn("Regi�o");
 
-		btnSalvar.setBounds(300, 156, 187, 55);
-		contentPane.add(btnSalvar);
-		
 		JLabel lblNewLabel_1_1 = new JLabel("Peso:");
 		lblNewLabel_1_1.setForeground(new Color(255, 255, 0));
 		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -154,8 +151,6 @@ public class TelaPokemon extends JFrame {
 		contentPane.add(txtAltura);
 		txtAltura.setColumns(10);
 
-		btnSalvar.setVisible(false);
-		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Altura:");
 		lblNewLabel_1_1_1.setForeground(new Color(255, 255, 0));
 		lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -231,7 +226,7 @@ public class TelaPokemon extends JFrame {
 
 									model.addRow(pok);
 								}
-								
+
 								txtNamePokemon.setText("");
 								txtPeso.setText("");
 								txtAltura.setText("");
@@ -259,20 +254,17 @@ public class TelaPokemon extends JFrame {
 
 		btnCadPokemon.setBounds(300, 95, 187, 46);
 		contentPane.add(btnCadPokemon);
-		
+
 		JButton btnDeletar = new JButton("Deletar cadastro");
 		btnDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Pokemon p = new Pokemon();
 				if (tablePokemons.getSelectedRow() >= 0) {
-					if (tablePokemons.getSelectedColumn() == 1) {
+					
 						instance.deletar(p, String.valueOf(tablePokemons.getValueAt(tablePokemons.getSelectedRow(),
 								tablePokemons.getSelectedColumn())));
 						model.removeRow(tablePokemons.getSelectedRow());
 						tablePokemons.setModel(model);
-					} else {
-						JOptionPane.showMessageDialog(null, "Selecione uma c�lula da coluna 'Pok�mon'.");
-					}
 
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecione uma linha para deletar.");
@@ -282,16 +274,20 @@ public class TelaPokemon extends JFrame {
 		btnDeletar.setBounds(300, 153, 187, 49);
 		contentPane.add(btnDeletar);
 
+		JButton btnSalvar = new JButton("Salvar");
+		JButton btnVoltaSalva = new JButton("<- Voltar");
+
 		JButton btnAlt = new JButton("Alterar");
 		btnAlt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				if (tablePokemons.getSelectedRow() >= 0) {
 					btnDeletar.setVisible(false);
 					btnAlt.setVisible(false);
 					btnCadPokemon.setVisible(false);
 					btnSalvar.setVisible(true);
-					
+					btnVoltaSalva.setVisible(true);
+
 					int linha = tablePokemons.getSelectedRow();
 					Integer idPokemon = (Integer) tablePokemons.getValueAt(linha, 0);
 					pokemonAEditar = instance.buscarPokemonPorId(idPokemon);
@@ -305,30 +301,115 @@ public class TelaPokemon extends JFrame {
 				} else {
 					JOptionPane.showMessageDialog(null, "Selecione uma linha para alterar.");
 				}
-				
+
 			}
 		});
 		btnAlt.setBounds(300, 217, 187, 46);
 		contentPane.add(btnAlt);
 
-		
-		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				boolean valida = instance.alterar(pokemonAEditar, pokemonAEditar.getId());
 				if (valida) {
-					JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
-					btnSalvar.setVisible(false);
-					btnDeletar.setVisible(true);
-					btnAlt.setVisible(true);
-					btnCadPokemon.setVisible(true);
+					try {
+						Double.parseDouble(txtPeso.getText());
+						try {
+							Double.parseDouble(txtAltura.getText());
+							if (txtNamePokemon.getText().isEmpty() || txtNamePokemon.getText() == null) {
+								JOptionPane.showMessageDialog(null, "Campo obrigat�rio: Pokemon");
+							} else if (txtPeso.getText().isEmpty() || txtAltura.getText() == null) {
+								JOptionPane.showMessageDialog(null, "Campo obrigat�rio: Peso");
+							} else if (txtAltura.getText().isEmpty() || txtPeso.getText() == null) {
+								JOptionPane.showMessageDialog(null, "Campo obrigat�rio: Altura");
+							} else if (txtPeso.getText().isEmpty() || txtPeso.getText() == null) {
+								JOptionPane.showMessageDialog(null, "Campo obrigat�rio: Peso");
+							} else if (comboBoxTipo.getSelectedItem().equals("Selecione o tipo")) {
+								JOptionPane.showMessageDialog(null, "Campo obrigat�rio: Tipo");
+							} else if (comboBoxRegiao.getSelectedItem().equals("Selecione a regi�o")) {
+								JOptionPane.showMessageDialog(null, "Campo obrigat�rio: Regi�o");
+							} else {
+
+								JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
+
+								model.getDataVector().removeAllElements();
+
+								pokemonAEditar.setId(pokemonAEditar.getId());
+								pokemonAEditar.setNome(txtNamePokemon.getText());
+								pokemonAEditar.setPeso(Double.valueOf(txtPeso.getText()));
+								pokemonAEditar.setAltura(Double.valueOf(txtAltura.getText()));
+								pokemonAEditar.setTipo(comboBoxTipo.getSelectedItem().toString());
+								pokemonAEditar.setRegiao(comboBoxRegiao.getSelectedItem().toString());
+
+								for (Pokemon p1 : arrayPokemon) {
+									Object[] pok = new Object[6];
+									pok[0] = p1.getId();
+									pok[1] = p1.getNome();
+									pok[2] = p1.getPeso();
+									pok[3] = p1.getAltura();
+									pok[4] = p1.getTipo();
+									pok[5] = p1.getRegiao();
+
+									model.addRow(pok);
+								}
+
+								btnSalvar.setVisible(false);
+								btnDeletar.setVisible(true);
+								btnAlt.setVisible(true);
+								btnCadPokemon.setVisible(true);
+								txtNamePokemon.setText("");
+								txtPeso.setText("");
+								txtAltura.setText("");
+								comboBoxTipo.setSelectedIndex(0);
+								comboBoxRegiao.setSelectedIndex(0);
+
+								txtNamePokemon.setText("");
+								txtPeso.setText("");
+								txtAltura.setText("");
+								comboBoxTipo.setSelectedIndex(0);
+								comboBoxRegiao.setSelectedIndex(0);
+
+							}
+
+						} catch (NumberFormatException e1) {
+							JOptionPane.showMessageDialog(null,
+									"Erro em campo: Altura. Voc� deve digitar um valor num�rico nesse campo.");
+						}
+					} catch (NumberFormatException e2) {
+						JOptionPane.showMessageDialog(null,
+								"Erro em campo: Peso. Voc� deve digitar um valor num�rico nesse campo.");
+					}
+
 				} else {
 					JOptionPane.showMessageDialog(null, "Não foi possível alterar.");
 				}
 			}
 		});
+
+		btnSalvar.setVisible(false);
+		btnSalvar.setBounds(300, 142, 187, 55);
+		contentPane.add(btnSalvar);
 		
+		
+		btnVoltaSalva.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnVoltaSalva.setVisible(false);
+				btnSalvar.setVisible(false);
+				btnCadPokemon.setVisible(true);
+				btnAlt.setVisible(true);
+				btnDeletar.setVisible(true);
+				
+				txtNamePokemon.setText("");
+				txtPeso.setText("");
+				txtAltura.setText("");
+				comboBoxTipo.setSelectedIndex(0);
+				comboBoxRegiao.setSelectedIndex(0);
+			}
+		});
+		btnVoltaSalva.setBounds(300, 204, 187, 23);
+		contentPane.add(btnVoltaSalva);
+		
+		btnVoltaSalva.setVisible(false);
 
 	}
 }

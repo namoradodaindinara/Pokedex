@@ -3,6 +3,7 @@ package controle;
 import java.util.ArrayList;
 
 import modelo.ITreinadorController;
+import modelo.Pokemon;
 import modelo.Treinador;
 
 public class TreinadorController implements ITreinadorController {
@@ -50,5 +51,27 @@ public class TreinadorController implements ITreinadorController {
 	// SELECT ALL
 	public ArrayList<Treinador> listaTreinador() {
 		return tabelaTreinador;
+	}
+
+
+	public boolean alterar(Treinador t, int id) {
+		for (Treinador tre : tabelaTreinador) {
+
+			if (t.getId() == id) {
+				tre.setNome(tre.getNome());
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public Treinador buscarTreinadorPorId(Integer id) {
+		for (Treinador treinador : tabelaTreinador) {
+			if (treinador.getId() == id) {
+				return treinador;
+			}
+		}
+		return null;
 	}
 }
