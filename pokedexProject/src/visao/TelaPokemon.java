@@ -357,6 +357,7 @@ public class TelaPokemon extends JFrame {
 								btnDeletar.setVisible(true);
 								btnAlt.setVisible(true);
 								btnCadPokemon.setVisible(true);
+								btnVoltaSalva.setVisible(false);
 								txtNamePokemon.setText("");
 								txtPeso.setText("");
 								txtAltura.setText("");
